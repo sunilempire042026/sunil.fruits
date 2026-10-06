@@ -21,6 +21,7 @@ public class ProductsController : ControllerBase
     /// Get all products with optional filtering and pagination
     /// </summary>
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll(
         [FromQuery] string? category = null,
         [FromQuery] string? search = null,
@@ -34,13 +35,14 @@ public class ProductsController : ControllerBase
     /// <summary>
     /// Get product by ID
     /// </summary>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById(int id)
     {
         var product = await _productService.GetByIdAsync(id);
         if (product == null)
             return NotFound(new { message = "Product not found" });
-        
+
         return Ok(product);
     }
 
@@ -48,6 +50,7 @@ public class ProductsController : ControllerBase
     /// Search products by query
     /// </summary>
     [HttpGet("search")]
+    [AllowAnonymous]
     public async Task<IActionResult> Search([FromQuery] string query)
     {
         var products = await _productService.SearchAsync(query);
@@ -69,24 +72,38 @@ public class ProductsController : ControllerBase
     /// Update an existing product (Admin only)
     /// </summary>
     [Authorize(Roles = "Admin")]
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateProductRequest request)
     {
         if (id != request.Id)
             return BadRequest(new { message = "ID mismatch" });
 
-        var product = await _productService.UpdateAsync(request);
-        return Ok(product);
+        try
+        {
+            var product = await _productService.UpdateAsync(request);
+            return Ok(product);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
     }
 
     /// <summary>
     /// Delete a product (Admin only)
     /// </summary>
     [Authorize(Roles = "Admin")]
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        await _productService.DeleteAsync(id);
-        return NoContent();
+        try
+        {
+            await _productService.DeleteAsync(id);
+            return NoContent();
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
     }
 }

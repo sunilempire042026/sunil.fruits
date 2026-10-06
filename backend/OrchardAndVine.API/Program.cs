@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.OpenApi.Models;
 using OrchardAndVine.API.Data;
-using OrchardAndVine.API.Models;
+using OrchardAndVine.API.Middleware;
+using OrchardAndVine.API.Models.Entities;
 using OrchardAndVine.API.Services;
 using OrchardAndVine.API.Services.Interfaces;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireDigit = true;
     options.Password.RequiredLength = 8;
     options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
     options.User.RequireUniqueEmail = true;
+    options.SignIn.RequireConfirmedEmail = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
@@ -44,7 +49,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        ClockSkew = TimeSpan.Zero
     };
 });
 
@@ -59,16 +65,15 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 
-// Add FluentValidation
-builder.Services.AddControllers()
-    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Program>());
+// Add Controllers
+builder.Services.AddControllers();
 
 // Add CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        var origins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>() 
+        var origins = builder.Configuration.GetSection("CorsOrigins").Get<string[]>()
             ?? new[] { "http://localhost:3000" };
         policy.WithOrigins(origins)
               .AllowAnyHeader()
@@ -82,16 +87,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Orchard & Vine API", Version = "v1" });
-    
+
     c.AddSecurityDefinition("Bearer", new()
     {
-        Description = "JWT Authorization header using the Bearer scheme",
+        Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer {token}'",
         Name = "Authorization",
         In = ParameterLocation.Header,
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-    
+
     c.AddSecurityRequirement(new()
     {
         { "Bearer", Array.Empty<string>() }
@@ -104,13 +109,33 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orchard & Vine API v1");
+        c.RoutePrefix = "swagger";
+    });
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+
+// Seed roles on startup
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roles = new[] { "Admin", "Customer" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+}
 
 app.Run();
