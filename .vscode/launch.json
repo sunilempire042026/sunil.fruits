@@ -25,6 +25,60 @@
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/src"
+    },
+    {
+      "name": ".NET Core Attach",
+      "type": "coreclr",
+      "request": "attach"
+    },
+    {
+      "name": ".NET Core Launch (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": ".NET: Run Backend",
+      "program": "${workspaceFolder}/backend/bin/Debug/net8.0/OrchardAndVine.API.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/backend",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
+      "name": ".NET Core Launch (console)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": ".NET: Build Backend",
+      "program": "${workspaceFolder}/backend/bin/Debug/net8.0/OrchardAndVine.API.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/backend",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Full Stack (Frontend + Backend)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Run Full Stack (Frontend + Backend)",
+      "serverReadyAction": {
+        "action": "debugWithChrome",
+        "pattern": "Local:.* (https?://\\S+)"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack Debug",
+      "configurations": [".NET Core Launch (web)", "Launch Chrome against localhost"]
     }
   ]
 }

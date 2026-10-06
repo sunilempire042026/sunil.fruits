@@ -45,6 +45,128 @@
       "dependsOrder": "sequence",
       "group": "build",
       "problemMatcher": []
+    },
+    {
+      "label": ".NET: Build Backend",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: Run Backend",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["run"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": ".NET: Run Backend (Watch)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["watch", "run"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": ".NET: Run Tests",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["test"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "test",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: Clean",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["clean"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: Publish",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["publish", "-c", "Release", "-o", "./publish"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: Restore Packages",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["restore"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: EF Migrations Add",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["ef", "migrations", "add", "${input:migrationName}"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": ".NET: EF Migrations Update",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["ef", "database", "update"],
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Run Full Stack (Frontend + Backend)",
+      "dependsOn": [
+        "Run Development Server",
+        ".NET: Run Backend (Watch)"
+      ],
+      "dependsOrder": "parallel",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "migrationName",
+      "type": "promptString",
+      "description": "Enter migration name"
     }
   ]
 }

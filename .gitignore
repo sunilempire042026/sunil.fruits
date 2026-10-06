@@ -33,5 +33,22 @@ coverage/
 # Misc
 .cache/
 .temp/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+publish/
+*.nupkg
+*.snupkg
+project.lock.json
+.vs/
+TestResults/
+packages/
 .next/
 build/

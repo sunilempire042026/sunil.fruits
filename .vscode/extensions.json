@@ -9,6 +9,16 @@
     "christian-kohler.npm-intellisense",
     "mikestead.dotenv",
     "aaron-bond.better-comments",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-dotnettools.csdevkit",
+    "ms-vscode.csharp",
+    "formulahendry.dotnet",
+    "kreativ-software.csharpextensions",
+    "jchannon.csharpextensions",
+    "fernandoescolar.vscode-solution-explorer",
+    "ms-azuretools.vscode-docker",
+    "humao.rest-client"
   ]
 }

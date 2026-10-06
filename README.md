@@ -51,12 +51,23 @@ A modern, responsive specialty fruit e-commerce web application built with React
 
 ## 🛠️ Tech Stack
 
+### Frontend
 - **React 18** - UI library
 - **TypeScript** - Type safety
 - **Vite** - Build tool and dev server
 - **Tailwind CSS** - Utility-first CSS framework
+- **Axios** - HTTP client for .NET API integration
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
+
+### Backend (.NET 8)
+- **ASP.NET Core 8.0** - Web API framework
+- **Entity Framework Core** - ORM
+- **SQL Server** - Database
+- **JWT Authentication** - Secure API access
+- **AutoMapper** - Object mapping
+- **FluentValidation** - Request validation
+- **Swagger/OpenAPI** - API documentation
 
 ## 📁 Project Structure
 
@@ -65,26 +76,43 @@ orchard-and-vine/
 ├── src/
 │   ├── data/
 │   │   └── products.ts       # Product data and types
+│   ├── services/
+│   │   ├── apiClient.ts      # Axios client with .NET API config
+│   │   ├── productService.ts # Product API service
+│   │   ├── authService.ts    # Authentication service
+│   │   └── orderService.ts   # Order API service
+│   ├── types/
+│   │   └── api.ts            # .NET API response types
 │   ├── App.tsx               # Main application component
 │   ├── main.tsx              # Application entry point
 │   └── index.css             # Global styles
+├── backend/
+│   └── OrchardAndVine.API/   # .NET Web API project
+│       ├── Controllers/      # API controllers
+│       ├── Models/           # DTOs and entities
+│       ├── Services/         # Business logic
+│       └── Data/             # DbContext and migrations
 ├── public/                   # Static assets
 ├── .vscode/                  # VS Code configuration
+├── .env.development          # Development environment
+├── .env.production           # Production environment
+├── api-tests.http            # REST Client test file
+├── OrchardAndVine.sln        # .NET solution file
+├── DOTNET_BACKEND.md         # .NET backend documentation
 ├── package.json
 ├── tsconfig.json
-├── vite.config.ts
-├── tailwind.config.js
 └── README.md
 ```
 
 ## 🎯 VS Code Setup
 
-This project includes optimized VS Code configurations:
+This project includes optimized VS Code configurations for both frontend and backend development:
 
 ### Recommended Extensions
 
 When you open the project in VS Code, you'll be prompted to install recommended extensions:
 
+**Frontend:**
 - **ESLint** - JavaScript/TypeScript linting
 - **Prettier** - Code formatting
 - **Tailwind CSS IntelliSense** - Autocomplete for Tailwind classes
@@ -93,22 +121,102 @@ When you open the project in VS Code, you'll be prompted to install recommended 
 - **Path Intellisense** - Autocomplete filenames
 - **NPM Intellisense** - Autocomplete npm packages
 
+**Backend (.NET):**
+- **C#** - C# language support
+- **C# Dev Kit** - Enhanced C# development
+- **.NET Install Tool** - .NET runtime management
+- **Solution Explorer** - .NET solution management
+- **Docker** - Container support
+- **REST Client** - API testing (use `api-tests.http`)
+
 ### Debugging
 
-Launch configurations are included for debugging in Chrome or Edge:
+Launch configurations are included for debugging:
 
+**Frontend:**
 1. Start the dev server: `npm run dev`
 2. Press `F5` or go to Run → Start Debugging
-3. Set breakpoints in your code
+3. Set breakpoints in your React code
+
+**Backend:**
+1. Open `OrchardAndVine.sln` in VS Code
+2. Press `F5` to start debugging the .NET API
+3. Set breakpoints in your C# code
+
+**Full Stack:**
+- Use "Full Stack Debug" configuration to debug both frontend and backend simultaneously
 
 ### Tasks
 
 Available tasks (Terminal → Run Task):
 
+**Frontend:**
 - **Install Dependencies** - Run `npm install`
 - **Run Development Server** - Start dev server
 - **Build for Production** - Create production build
 - **Preview Production Build** - Preview built app
+
+**Backend (.NET):**
+- **.NET: Build Backend** - Build the API
+- **.NET: Run Backend** - Start the API server
+- **.NET: Run Backend (Watch)** - Start with hot reload
+- **.NET: Run Tests** - Run unit tests
+- **.NET: Clean** - Clean build artifacts
+- **.NET: Publish** - Publish for deployment
+- **.NET: Restore Packages** - Restore NuGet packages
+- **.NET: EF Migrations Add** - Add database migration
+- **.NET: EF Migrations Update** - Update database
+
+**Combined:**
+- **Run Full Stack (Frontend + Backend)** - Start both servers
+
+## 🔗 .NET Backend Integration
+
+This frontend is designed to work seamlessly with a .NET Web API backend.
+
+### Quick Start with Backend
+
+1. **Setup the backend:**
+   ```bash
+   cd backend/OrchardAndVine.API
+   dotnet restore
+   dotnet ef database update
+   dotnet run
+   ```
+
+2. **The API will be available at:** `http://localhost:5000`
+
+3. **Swagger UI:** `http://localhost:5000/swagger`
+
+4. **Test the API:**
+   - Open `api-tests.http` in VS Code
+   - Use the REST Client extension to run requests
+
+### Environment Configuration
+
+The frontend uses environment-specific configuration:
+
+- `.env.development` - Development (localhost:5000)
+- `.env.staging` - Staging environment
+- `.env.production` - Production environment
+
+### API Client
+
+The frontend includes a pre-configured Axios client (`src/services/apiClient.ts`) that:
+- Automatically attaches JWT tokens to requests
+- Handles .NET API error responses
+- Supports request/response interceptors
+- Configures CORS for .NET backend
+
+### Authentication Flow
+
+1. Register: `POST /api/auth/register`
+2. Login: `POST /api/auth/login` → returns JWT token
+3. Token stored in localStorage
+4. All requests include `Authorization: Bearer {token}`
+5. Token refresh: `POST /api/auth/refresh-token`
+
+See [DOTNET_BACKEND.md](./DOTNET_BACKEND.md) for complete backend documentation.
 
 ## 🌐 Deployment
 
