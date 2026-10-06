@@ -1,0 +1,164 @@
+# OrchardAndVine API Test File
+# Use with REST Client VS Code extension
+
+@baseUrl = http://localhost:5000/api
+@contentType = application/json
+
+### ========================================
+### AUTHENTICATION
+### ========================================
+
+### Register New User
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "john@example.com",
+  "password": "Password123!",
+  "confirmPassword": "Password123!",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+### Login
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "john@example.com",
+  "password": "Password123!",
+  "rememberMe": true
+}
+
+### Get Current User
+GET {{baseUrl}}/auth/user
+Authorization: Bearer {{login.response.body.token}}
+
+### Refresh Token
+POST {{baseUrl}}/auth/refresh-token
+Content-Type: {{contentType}}
+
+{
+  "refreshToken": "your-refresh-token-here"
+}
+
+### Logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{login.response.body.token}}
+
+### ========================================
+### PRODUCTS
+### ========================================
+
+### Get All Products
+GET {{baseUrl}}/products
+
+### Get Products with Pagination
+GET {{baseUrl}}/products?page=1&pageSize=10
+
+### Get Products by Category
+GET {{baseUrl}}/products?category=tropical
+
+### Search Products
+GET {{baseUrl}}/products/search?query=mango
+
+### Get Product by ID
+GET {{baseUrl}}/products/1
+
+### Create Product (Admin)
+POST {{baseUrl}}/products
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Premium Strawberry",
+  "origin": "California, USA",
+  "category": "berry",
+  "price": 29.99,
+  "unit": "box of 12",
+  "description": "Sweet, juicy strawberries",
+  "details": ["Organic", "Hand-picked", "Same-day shipping"],
+  "season": "Spring - Summer"
+}
+
+### Update Product (Admin)
+PUT {{baseUrl}}/products/1
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: {{contentType}}
+
+{
+  "id": 1,
+  "name": "Updated Product Name",
+  "price": 99.99
+}
+
+### Delete Product (Admin)
+DELETE {{baseUrl}}/products/1
+Authorization: Bearer {{login.response.body.token}}
+
+### ========================================
+### CATEGORIES
+### ========================================
+
+### Get All Categories
+GET {{baseUrl}}/categories
+
+### ========================================
+### ORDERS
+### ========================================
+
+### Get My Orders
+GET {{baseUrl}}/orders
+Authorization: Bearer {{login.response.body.token}}
+
+### Get My Orders with Pagination
+GET {{baseUrl}}/orders?page=1&pageSize=10
+Authorization: Bearer {{login.response.body.token}}
+
+### Get Order by ID
+GET {{baseUrl}}/orders/123e4567-e89b-12d3-a456-426614174000
+Authorization: Bearer {{login.response.body.token}}
+
+### Create Order
+POST {{baseUrl}}/orders
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: {{contentType}}
+
+{
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    },
+    {
+      "productId": 3,
+      "quantity": 1
+    }
+  ],
+  "shippingAddress": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "street": "123 Orchard Lane",
+    "city": "Portland",
+    "state": "OR",
+    "postalCode": "97201",
+    "country": "USA",
+    "phone": "+1-555-0123"
+  },
+  "paymentMethod": "credit_card",
+  "notes": "Please handle with care"
+}
+
+### Cancel Order
+PUT {{baseUrl}}/orders/123e4567-e89b-12d3-a456-426614174000/cancel
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: {{contentType}}
+
+{
+  "reason": "Changed my mind"
+}
+
+### Get Order Tracking
+GET {{baseUrl}}/orders/123e4567-e89b-12d3-a456-426614174000/tracking
+Authorization: Bearer {{login.response.body.token}}
