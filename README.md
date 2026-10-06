@@ -104,6 +104,32 @@ orchard-and-vine/
 └── README.md
 ```
 
+## 🖥️ Microsoft Visual Studio Setup
+
+This project is fully compatible with **Visual Studio 2022** (Community, Professional, or Enterprise).
+
+### Quick Start
+
+1. **Open `OrchardAndVine.sln`** in Visual Studio 2022
+2. **Install required workloads** (if prompted):
+   - ASP.NET and web development
+   - Node.js development
+3. **Restore packages**: Right-click solution → "Restore NuGet Packages" + npm install
+4. **Set startup projects**: Right-click solution → "Set Startup Projects..." → Multiple startup projects
+5. **Press F5** to run both frontend and backend
+
+### What's Included
+
+- ✅ **Solution file** (`OrchardAndVine.sln`) - Opens both frontend and backend
+- ✅ **Node.js project** (`.njsproj`) - Frontend recognized as Node.js project
+- ✅ **C# project** (`.csproj`) - Backend with full IntelliSense
+- ✅ **Debug configurations** - Breakpoints in both C# and TypeScript
+- ✅ **Database tools** - Entity Framework migrations via Package Manager Console
+
+📖 **Full guide:** See [VISUAL_STUDIO_SETUP.md](./VISUAL_STUDIO_SETUP.md) for detailed instructions.
+
+---
+
 ## 🎯 VS Code Setup
 
 This project includes optimized VS Code configurations for both frontend and backend development:

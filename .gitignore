@@ -47,8 +47,11 @@ publish/
 *.nupkg
 *.snupkg
 project.lock.json
-.vs/
 TestResults/
 packages/
+
+# Visual Studio (keep .vs folder for shared settings)
+*.rsuser
+*.DotSettings.user
 .next/
 build/
