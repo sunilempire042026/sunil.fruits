@@ -50,16 +50,15 @@ OrchardAndVine.API/
 └── OrchardAndVine.API.csproj
 ```
 
-## 📦 NuGet Packages
+## 📦 NuGet Packages (.NET 10)
 
 ```xml
-<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
-<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
-<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
-<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-<PackageReference Include="AutoMapper" Version="12.0.1" />
-<PackageReference Include="FluentValidation.AspNetCore" Version="11.5.1" />
+<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
+<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
+<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+<PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+<PackageReference Include="AutoMapper" Version="13.0.1" />
 ```
 
 ## 🔧 Configuration (appsettings.json)

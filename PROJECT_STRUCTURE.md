@@ -26,7 +26,7 @@ orchard-and-vine/
 │   ├── tsconfig.json                    # TypeScript config
 │   └── vite.config.js                   # Vite config
 │
-├── 🔧 BACKEND (.NET Core 8.0 Web API)
+├── 🔧 BACKEND (.NET 10.0 Web API - LTS)
 │   └── backend/
 │       └── OrchardAndVine.API/
 │           ├── Controllers/
@@ -200,9 +200,9 @@ npm run dev
 - Axios
 
 **Backend:**
-- .NET 8.0
-- ASP.NET Core Web API
-- Entity Framework Core 8
+- .NET 10.0 (LTS)
+- ASP.NET Core 10 Web API
+- Entity Framework Core 10
 - SQL Server
 - JWT Authentication
 - AutoMapper

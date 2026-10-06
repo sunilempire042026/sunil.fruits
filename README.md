@@ -60,14 +60,15 @@ A modern, responsive specialty fruit e-commerce web application built with React
 - **ESLint** - Code linting
 - **Prettier** - Code formatting
 
-### Backend (.NET 8)
-- **ASP.NET Core 8.0** - Web API framework
-- **Entity Framework Core** - ORM
+### Backend (.NET 10 LTS)
+- **ASP.NET Core 10.0** - Web API framework (latest LTS, released Nov 2025)
+- **Entity Framework Core 10** - ORM with improved performance
 - **SQL Server** - Database
 - **JWT Authentication** - Secure API access
-- **AutoMapper** - Object mapping
-- **FluentValidation** - Request validation
+- **AutoMapper 13** - Object mapping
 - **Swagger/OpenAPI** - API documentation
+
+📖 **See [DOTNET_VERSION.md](./DOTNET_VERSION.md) for version details and migration info.**
 
 ## 📁 Project Structure
 

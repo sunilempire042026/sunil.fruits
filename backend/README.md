@@ -1,6 +1,6 @@
-# Orchard & Vine - .NET Core 8 Web API Backend
+# Orchard & Vine - .NET 10 Web API Backend
 
-Complete ASP.NET Core 8.0 Web API backend for the Orchard & Vine specialty fruit e-commerce platform.
+Complete ASP.NET Core 10.0 (LTS) Web API backend for the Orchard & Vine specialty fruit e-commerce platform.
 
 ## 🏗️ Architecture
 
@@ -51,9 +51,9 @@ backend/OrchardAndVine.API/
 
 ### Prerequisites
 
-- **.NET 8 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **.NET 10 SDK** (LTS) - [Download](https://dotnet.microsoft.com/download/dotnet/10.0)
 - **SQL Server** (LocalDB or full instance)
-- **Visual Studio 2022** or **VS Code with C# Dev Kit**
+- **Visual Studio 2022** (17.12+) or **VS Code with C# Dev Kit**
 
 ### Setup Steps
 
@@ -336,15 +336,15 @@ curl -X POST http://localhost:5000/api/orders \
 - `appsettings.Development.json` - Development overrides
 - `appsettings.Production.json` - Production settings
 
-## 📦 NuGet Packages
+## 📦 NuGet Packages (.NET 10)
 
 ```xml
-<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
-<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
-<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
-<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-<PackageReference Include="AutoMapper" Version="12.0.1" />
+<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
+<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
+<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+<PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+<PackageReference Include="AutoMapper" Version="13.0.1" />
 ```
 
 ## 🚀 Deployment
@@ -368,7 +368,7 @@ az group create --name OrchardAndVineRG --location eastus
 az appservice plan create --name MyAppServicePlan --resource-group OrchardAndVineRG --sku B1
 
 # Create Web App
-az webapp create --resource-group OrchardAndVineRG --plan MyAppServicePlan --name orchard-and-vine-api --runtime "DOTNET:8.0"
+az webapp create --resource-group OrchardAndVineRG --plan MyAppServicePlan --name orchard-and-vine-api --runtime "DOTNET:10.0"
 
 # Deploy
 az webapp deploy --resource-group OrchardAndVineRG --name orchard-and-vine-api --src-path ./publish
@@ -377,12 +377,12 @@ az webapp deploy --resource-group OrchardAndVineRG --name orchard-and-vine-api -
 ### Docker Deployment
 
 ```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 COPY ["OrchardAndVine.API.csproj", "./"]
 RUN dotnet restore
@@ -464,4 +464,4 @@ dotnet restore
 
 ---
 
-**Built with ASP.NET Core 8.0** 🚀
+**Built with ASP.NET Core 10.0 (LTS)** 🚀

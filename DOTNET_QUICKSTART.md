@@ -4,10 +4,10 @@ Welcome! This guide will help you get started with the Orchard & Vine project as
 
 ## 🚀 Prerequisites
 
-- **.NET 8 SDK** - [Download here](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **.NET 10 SDK** (LTS) - [Download here](https://dotnet.microsoft.com/download/dotnet/10.0)
 - **SQL Server** (LocalDB or full instance)
 - **Node.js 18+** - [Download here](https://nodejs.org/)
-- **Visual Studio Code** with C# extension OR **Visual Studio 2022**
+- **Visual Studio Code** with C# extension OR **Visual Studio 2022** (17.12+)
 
 ## 📦 Initial Setup
 

@@ -14,7 +14,7 @@ During Visual Studio installation (or via the Visual Studio Installer), ensure t
 
 #### 1. ASP.NET and Web Development
 - **Workload:** "ASP.NET and web development"
-- Includes: .NET 8 SDK, IIS Express, NuGet package manager
+- Includes: .NET 10 SDK (LTS), IIS Express, NuGet package manager
 
 #### 2. Node.js Development
 - **Workload:** "Node.js development"
